@@ -3,7 +3,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -11,58 +11,28 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import PageviewIcon from "@mui/icons-material/Pageview";
-import Avatar from "@mui/material/Avatar";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import PushNotification from "../components/PushNotification";
 
 const drawerWidth = 240;
 
-// const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-//     ({ theme, open }) => ({
-//         flexGrow: 1,
-//         padding: theme.spacing(3),
-//         transition: theme.transitions.create("margin", {
-//             easing: theme.transitions.easing.sharp,
-//             duration: theme.transitions.duration.leavingScreen
-//         }),
-//         marginLeft: `-${drawerWidth}px`,
-//         ...(open && {
-//             transition: theme.transitions.create("margin", {
-//                 easing: theme.transitions.easing.easeOut,
-//                 duration: theme.transitions.duration.enteringScreen
-//             }),
-//             marginLeft: 0
+// const NavBar = styled(AppBar, {
+//     shouldForwardProp: (prop) => prop !== "open"
+// })(({ theme, open }) => ({
+//     transition: theme.transitions.create(["margin", "width"], {
+//         easing: theme.transitions.easing.sharp,
+//         duration: theme.transitions.duration.leavingScreen
+//     }),
+//     ...(open && {
+//         width: `calc(100% - ${drawerWidth}px)`,
+//         marginLeft: `${drawerWidth}px`,
+//         transition: theme.transitions.create(["margin", "width"], {
+//             easing: theme.transitions.easing.easeOut,
+//             duration: theme.transitions.duration.enteringScreen
 //         })
 //     })
-// );
-
-
-
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== "open"
-})(({ theme, open }) => ({
-    transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-    }),
-    ...(open && {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: `${drawerWidth}px`,
-        transition: theme.transitions.create(["margin", "width"], {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen
-        })
-    })
-}));
-
-const DrawerHeader = () => (
-    <Box>
-        <Toolbar />
-    </Box>
-);
+// }));
 
 export default function PersistentDrawerLeft() {
     const theme = useTheme();
@@ -72,22 +42,51 @@ export default function PersistentDrawerLeft() {
         setOpen(!open);
     };
 
-    const Main = (props) => {
+    const DrawerHeader = () => (
+        <Box>
+            <Toolbar />
+        </Box>
+    );
 
+    const NavBar = (props) => {
         const transitionForDrawer = open ?
-        { 
-            transition: theme.transitions.create(["margin", "width"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen
-            }),
-            marginLeft: 0
-        } : {
-            transition: theme.transitions.create("margin", {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen
-            }),
-            marginLeft: `-${drawerWidth}px`
-        };
+            {
+                width: `calc(100% - ${drawerWidth}px)`,
+                marginLeft: `${drawerWidth}px`,
+                transition: theme.transitions.create(["margin", "width"], {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen
+                })
+            } : {
+                transition: theme.transitions.create(["margin", "width"], {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen
+                })
+            };
+
+        return (
+            <AppBar
+                sx={transitionForDrawer}
+                {...props}
+            />
+        );
+    };
+
+    const Main = (props) => {
+        const transitionForDrawer = open ?
+            {
+                transition: theme.transitions.create(["margin", "width"], {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen
+                }),
+                marginLeft: 0
+            } : {
+                transition: theme.transitions.create("margin", {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen
+                }),
+                marginLeft: `-${drawerWidth}px`
+            };
 
         return (
             <Box
@@ -106,7 +105,7 @@ export default function PersistentDrawerLeft() {
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <AppBar position="fixed" open={open}>
+            <NavBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -118,10 +117,10 @@ export default function PersistentDrawerLeft() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Persistent drawer
+                        Browser API
                     </Typography>
                 </Toolbar>
-            </AppBar>
+            </NavBar>
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -160,7 +159,7 @@ export default function PersistentDrawerLeft() {
                     ))}
                 </List>
             </Drawer>
-            <Main open={open}>
+            <Main>
                 <Typography paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
