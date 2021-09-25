@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Layout from '../src/layouts/Layout'
 
 export default class App extends Component {
     static displayName = App.name;
@@ -43,16 +44,18 @@ export default class App extends Component {
             : App.renderForecastsTable(this.state.forecasts);
 
         return (
-            <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
-            </div>
+            <Layout>
+                <div>
+                    <h1 id="tabelLabel" >Weather forecast</h1>
+                    <p>This component demonstrates fetching data from the server.</p>
+                    {contents}
+                </div>
+            </Layout>
         );
     }
 
     async populateWeatherData() {
-        const response = await fetch('weatherforecast');
+        const response = await fetch('/weatherforecast');
         const data = await response.json();
         this.setState({ forecasts: data, loading: false });
     }
