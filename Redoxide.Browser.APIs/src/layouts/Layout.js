@@ -14,6 +14,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Notification from "../components/Notification";
 
 const drawerWidth = 240;
 
@@ -140,6 +141,7 @@ export default function PersistentDrawerLeft() {
                 </List>
             </Drawer>
             <Main>
+                <Notification />
                 <Typography paragraph>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                     eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
